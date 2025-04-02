@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Vocabulario</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 500px; margin: auto; padding: 20px; }
+        .question { margin: 10px 0; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Test de Vocabulario - Restaurante</h2>
+        <form id="quizForm">
+            <div id="questions"></div>
+            <button type="button" onclick="checkAnswers()">Verificar respuestas</button>
+        </form>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const vocabulary = [
+            { question: "¿Cómo se escribe 'mesa' en inglés?", answer: "Table" },
+            { question: "¿Cómo se escribe 'silla' en inglés?", answer: "Chair" },
+            { question: "¿Cómo se escribe 'menú' en inglés?", answer: "Menu" },
+            { question: "¿Cómo se escribe 'plato' en inglés?", answer: "Plate" },
+            { question: "¿Cómo se escribe 'vaso' en inglés?", answer: "Glass" },
+            { question: "¿Cómo se escribe 'taza' en inglés?", answer: "Cup" },
+            { question: "¿Cómo se escribe 'cuchillo' en inglés?", answer: "Knife" },
+            { question: "¿Cómo se escribe 'tenedor' en inglés?", answer: "Fork" },
+            { question: "¿Cómo se escribe 'cuchara' en inglés?", answer: "Spoon" },
+            { question: "¿Cómo se escribe 'servilleta' en inglés?", answer: "Napkin" },
+            { question: "¿Cómo se escribe 'sal' en inglés?", answer: "Salt" },
+            { question: "¿Cómo se escribe 'pimienta' en inglés?", answer: "Pepper" },
+            { question: "¿Cómo se escribe 'agua' en inglés?", answer: "Water" },
+            { question: "¿Cómo se escribe 'jugo' en inglés?", answer: "Juice" },
+            { question: "¿Cómo se escribe 'pan' en inglés?", answer: "Bread" },
+            { question: "¿Cómo se escribe 'camarero/mesero' en inglés?", answer: "Waiter" },
+            { question: "¿Cómo se escribe 'camarera/mesera' en inglés?", answer: "Waitress" },
+            { question: "¿Cómo se escribe 'cocina' en inglés?", answer: "Kitchen" },
+            { question: "¿Cómo se escribe 'cuenta' en inglés?", answer: "Bill" },
+            { question: "¿Cómo se escribe 'propina' en inglés?", answer: "Tip" }
+        ];
+
+        const questionsContainer = document.getElementById("questions");
+        
+        vocabulary.forEach((item, index) => {
+            const div = document.createElement("div");
+            div.classList.add("question");
+            div.innerHTML = `
+                <label>${item.question}</label><br>
+                <input type="text" id="answer${index}" autocomplete="off">
+                <span id="result${index}"></span>
+                <br>
+            `;
+            questionsContainer.appendChild(div);
+        });
+
+        function checkAnswers() {
+            let correctCount = 0;
+            vocabulary.forEach((item, index) => {
+                const userAnswer = document.getElementById(`answer${index}`).value.trim();
+                const resultSpan = document.getElementById(`result${index}`);
+                if (userAnswer.toLowerCase() === item.answer.toLowerCase()) {
+                    resultSpan.textContent = "✓ Correcto";
+                    resultSpan.className = "correct";
+                    correctCount++;
+                } else {
+                    resultSpan.textContent = `✗ Incorrecto (Respuesta: ${item.answer})`;
+                    resultSpan.className = "incorrect";
+                }
+            });
+            document.getElementById("result").textContent = `Puntuación: ${correctCount} / ${vocabulary.length}`;
+        }
+    </script>
+</body>
+</html>
